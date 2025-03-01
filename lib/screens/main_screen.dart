@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'inicio_screen.dart';
-import 'reservas_screen.dart';
+import '../no use/reservas_screen.dart';
 import 'perfil_screen.dart';
 
 class MainScreen extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'dart:convert';
 class AuthService {
   final String baseUrl = "http://127.0.0.1:8000/api/users";
 
-  /// 🟢 **Login de usuario**
+  /// Login de usuario
     Future<Map<String, String>?> login(String email, String password) async {
         final response = await http.post(
           Uri.parse("$baseUrl/login/"),
@@ -16,14 +16,14 @@ class AuthService {
           final data = jsonDecode(response.body);
           return {
             "token": data["access"],
-            "nombre": data["nombre"] ?? "Usuario" // 🔹 Si el nombre es null, usa "Usuario"
+            "nombre": data["nombre"] ?? "Usuario" // Si el nombre es null, usa "usuario"
           };
         } else {
           return null;
         }
       }
 
-  /// 🔵 **Registro de usuario**
+  /// Registro de usuario
   Future<bool> register(String username, String firstName, String lastName, String email, String phone, String password) async {
     final response = await http.post(
       Uri.parse("$baseUrl/register/"),
@@ -41,7 +41,7 @@ class AuthService {
     return response.statusCode == 201;
   }
 
-  /// 🟠 **Cambiar rol (Cliente <-> Prestador de Servicio)**
+  /// Cambiar rol Cliente <-> Prestador de Servicio
   Future<bool> cambiarRol(String token, String nuevoRol) async {
     final response = await http.post(
       Uri.parse("$baseUrl/cambiar-rol/"),

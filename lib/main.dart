@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(), // 🔹 Agregamos la ruta de registro
+        '/register': (context) => RegisterScreen(), // ruta de registro
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/main') {

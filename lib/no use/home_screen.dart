@@ -3,7 +3,7 @@ import '../services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final String role;
-  final String token;  // 🔹 Agregar token
+  final String token;  // Agregar token
 
   HomeScreen({required this.role, required this.token});
 
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SizedBox(height: 20),
 
-          // 🔹 Botón para buscar prestadores cercanos
+          //  Botón para buscar prestadores cercanos
           ElevatedButton(
             onPressed: () => Navigator.pushNamed(context, '/buscar-prestadores'),
             child: Text("Buscar Prestadores Cercanos"),
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           SizedBox(height: 20),
 
-          // 🔹 Mostrar "Convertirse en Prestador" solo si el usuario es cliente
+          //  Mostrar "Convertirse en Prestador" solo si el usuario es cliente
           if (currentRole == "cliente")
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(
@@ -66,13 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
           SizedBox(height: 20),
 
-          // 🔹 Botón para cambiar de rol entre cliente y prestador
+          //  Botón para cambiar de rol entre cliente y prestador
           ElevatedButton(
             onPressed: switchRole,
             child: Text("Cambiar a ${currentRole == "cliente" ? "prestador" : "cliente"}"),
           ),
           
-                    // 🔹 Botón para ir al perfil del usuario
+                    //  Botón para ir al perfil del usuario
           ElevatedButton(
             onPressed: () => Navigator.pushNamed(
               context,

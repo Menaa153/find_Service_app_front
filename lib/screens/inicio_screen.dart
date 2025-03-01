@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../services/location_service.dart';
 import '../services/api_service.dart';
+import 'perfil_prestador_screen.dart';
 
 class InicioScreen extends StatefulWidget {
   final String token;
@@ -67,7 +68,7 @@ class _InicioScreenState extends State<InicioScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {}, // Aquí puedes agregar funcionalidad de notificaciones
+            onPressed: () {}, // agregar funcionalidad de notificaciones
           ),
         ],
       ),
@@ -75,7 +76,7 @@ class _InicioScreenState extends State<InicioScreen> {
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // 🔹 Campo de Búsqueda de Categoría
+            // Campo de busqueda de categoria
             TextField(
               controller: categoriaController,
               decoration: InputDecoration(
@@ -83,19 +84,19 @@ class _InicioScreenState extends State<InicioScreen> {
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.filter_list),
-                  onPressed: buscar, // 🔹 Buscar al presionar el botón de filtro
+                  onPressed: buscar, // Buscar al presionar el boton
                 ),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
               ),
-              onSubmitted: (value) => buscar(), // 🔹 Buscar al presionar Enter
+              onSubmitted: (value) => buscar(), // Buscar al presionar enter
             ),
 
             SizedBox(height: 20),
 
-            // 🔹 Mostrar Cargando
+            //mostrar cargando
             if (isLoading) CircularProgressIndicator(),
 
-            // 🔹 Lista de Resultados
+            // lsta de resultados
             Expanded(
               child: ListView.builder(
                 itemCount: prestadores.length,
@@ -107,6 +108,8 @@ class _InicioScreenState extends State<InicioScreen> {
                     p["categoria"],
                     p["email"],
                     calificacion,
+                    p["descripcion"],
+                    context, // pasamos el `context` para la navegacion
                   );
                 },
               ),
@@ -117,10 +120,10 @@ class _InicioScreenState extends State<InicioScreen> {
     );
   }
 
-  Widget _prestadorItem(String nombre, String categoria, String ubicacion, double calificacion) {
+  Widget _prestadorItem(String nombre, String categoria, String ubicacion, double calificacion, String descripcion, BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: AssetImage("assets/default_profile.png"), // Imagen de perfil por defecto
+        backgroundImage: AssetImage("assets/default_profile.png"),
       ),
       title: Text(nombre),
       subtitle: Text("Categoría: $categoria\nUbicación: $ubicacion"),
@@ -131,7 +134,21 @@ class _InicioScreenState extends State<InicioScreen> {
           Text(calificacion.toStringAsFixed(1)),
         ],
       ),
+      onTap: () {
+        // Navegamos a la pantalla de perfil del prestador con los datos correctos
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PerfilPrestadorScreen(
+              nombre: nombre,
+              categoria: categoria,
+              ubicacion: ubicacion,
+              calificacion: calificacion.toStringAsFixed(1),
+              descripcion: descripcion,
+            ),
+          ),
+        );
+      },
     );
   }
 }
-
