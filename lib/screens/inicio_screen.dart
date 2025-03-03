@@ -1,3 +1,4 @@
+//import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../services/location_service.dart';
@@ -40,10 +41,11 @@ class _InicioScreenState extends State<InicioScreen> {
       var posicion = await locationService.getCurrentLocation();
       List<dynamic> resultados = await apiService.buscarPrestadores(
           posicion.latitude, posicion.longitude, categoria);
-
+      print(resultados);
       setState(() {
         prestadores = resultados;
       });
+      print(prestadores);
     } catch (e) {
       print("Error: $e");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,26 +103,28 @@ class _InicioScreenState extends State<InicioScreen> {
               child: ListView.builder(
                 itemCount: prestadores.length,
                 itemBuilder: (context, index) {
-                  final p = prestadores[index];
+                  final p = prestadores[index]; // Accede al objeto prestador
                   double calificacion = generarCalificacion();
                   return _prestadorItem(
                     p["username"],
                     p["categoria"],
-                    p["email"],
+                    p["distancia_km"],
                     calificacion,
                     p["descripcion"],
-                    context, // pasamos el `context` para la navegacion
+                    context, 
+                    p,  // Pasa el objeto completo 'prestador' como parámetro
                   );
                 },
               ),
             ),
+
           ],
         ),
       ),
     );
   }
 
-  Widget _prestadorItem(String nombre, String categoria, String ubicacion, double calificacion, String descripcion, BuildContext context) {
+  Widget _prestadorItem(String nombre, String categoria, String ubicacion, double calificacion, String descripcion, BuildContext context, Map<String, dynamic> prestador) {
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: AssetImage("assets/default_profile.png"),
@@ -135,7 +139,7 @@ class _InicioScreenState extends State<InicioScreen> {
         ],
       ),
       onTap: () {
-        // Navegamos a la pantalla de perfil del prestador con los datos correctos
+        // Aquí pasamos el token y el prestadorId al navegar a PerfilPrestadorScreen
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -145,10 +149,13 @@ class _InicioScreenState extends State<InicioScreen> {
               ubicacion: ubicacion,
               calificacion: calificacion.toStringAsFixed(1),
               descripcion: descripcion,
+              token: widget.token, // Pasa el token de autenticación aquí
+              prestadorId: prestador["id"].toString(), // Conversión a String, // Pasa el prestadorId (ahora el parámetro prestador es el valor correcto)
             ),
           ),
         );
       },
     );
   }
+
 }

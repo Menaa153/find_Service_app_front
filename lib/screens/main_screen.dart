@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'inicio_screen.dart';
-import '../no use/reservas_screen.dart';
+import 'reservas_screen.dart';
 import 'perfil_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
     if (index == 2) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PerfilScreen(token: widget.token)),
+        MaterialPageRoute(builder: (context) => PerfilScreen(token: widget.token, username: 'username',)),
       );
     } else {
       setState(() {

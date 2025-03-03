@@ -1,3 +1,5 @@
+//import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'chat_screen.dart';
 import 'reserva_screen.dart';
@@ -8,6 +10,8 @@ class PerfilPrestadorScreen extends StatelessWidget {
   final String ubicacion;
   final String calificacion;
   final String descripcion;
+  final String token;  // Agrega el parámetro token
+  final String prestadorId;  // Agrega el parámetro prestadorId
 
   PerfilPrestadorScreen({
     required this.nombre,
@@ -15,6 +19,8 @@ class PerfilPrestadorScreen extends StatelessWidget {
     required this.ubicacion,
     required this.calificacion,
     required this.descripcion,
+    required this.token,       // Asegúrate de pasar el token
+    required this.prestadorId, // Asegúrate de pasar el prestadorId
   });
 
   @override
@@ -66,7 +72,7 @@ class PerfilPrestadorScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text("Ubicación: $ubicacion"),
-            Text("Servicios realizados: 10"), // modificar
+            Text("Servicios realizados: 10"), // modificar si tenemos este dato
             Text("Descripción: $descripcion"),
             SizedBox(height: 20),
             Divider(),
@@ -92,7 +98,10 @@ class PerfilPrestadorScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReservaScreen(),
+                        builder: (context) => ReservaScreen(
+                          token: token,          // Pasa el token de autenticación del usuario
+                          prestadorId: prestadorId, // El ID del prestador que se va a reservar
+                        ),
                       ),
                     );
                   },
@@ -105,3 +114,4 @@ class PerfilPrestadorScreen extends StatelessWidget {
     );
   }
 }
+
